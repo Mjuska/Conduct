@@ -1,0 +1,37 @@
+stack(
+  // --- Low melodic pulse with bass drum ---
+  fast(4,
+    s("bd ~ [bd ~ ~ bd]")
+      .gain(0.4)
+      .shape(0.5)
+      .room(0.4)
+  ),
+
+  // --- Mid-range melodic line with snare taps ---
+  sometimesBy(0.6,
+    fast(3,
+      s("sd ~ [~ sd ~ sd]")
+        .gain(0.2)
+        .shape(0.6)
+        .room(0.5)
+    )
+  ),
+
+  // --- High “plucked” melodic accents using hi-hat ---
+  fast(8,
+    s("hh ~ [hh ~ hh]")
+      .gain(0.1)
+      .shape(0.95)
+      .room(0.7)
+  ),
+
+  // --- Ghostly occasional accents ---
+  sometimesBy(0.3,
+    fast(12,
+      s("hc")
+        .gain(0.05)
+        .shape(0.8)
+        .room(0.8)
+    )
+  )
+)
