@@ -1,0 +1,39 @@
+stack(
+
+  // --- Soft pulsing body beat ---
+  slow(2,
+    s("bd ~ ~ bd")
+      .gain(0.5)
+      .shape(0.5)
+      .room(0.6)
+  ),
+
+  // --- Biophilia-style "micro-percussion" ---
+  fast(8,
+    s("hh hc ~ hh")
+      .gain(0.15)
+      .shape(0.95)
+  ),
+
+  // --- Cellular clicks / organism noises ---
+  fast(5,
+      s("insect ~ insect")
+        .gain(0.1)
+        .shape(0.8)
+  ),
+
+  // --- Scientific glitch bursts (supposed to feel 'alive') ---
+  sometimesBy(0.3,
+    fast(12,
+      s("hh").gain(0.05).shape(0.9)
+    )
+  ),
+
+  // --- Slow, swelling resonant tones (ambient biology) ---
+  slow(4,
+    s("sd")
+      .gain(0.2)
+      .room(0.9)
+      .shape(0.3)
+  )
+)
