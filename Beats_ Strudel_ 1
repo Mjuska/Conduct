@@ -1,0 +1,44 @@
+stack(
+
+  // --- soft, irregular kick pulse ---
+  slow(2,
+    s("bd ~ ~ [bd ~]")
+      .gain(0.8)
+      .shape(0.5)
+      .room(0.4)
+  ),
+
+  // --- airy, breathy hats ---
+  fast(5,
+    s("hh ~ [hh ~] ~ hh")
+      .gain(0.18)
+      .shape(0.95)
+  ),
+
+  // --- delicate taps like bones/sticks ---
+  sometimesBy(0.4,
+    fast(3,
+      s("hc ~ [hc ~] ~")
+        .gain(0.12)
+        .shape(0.7)
+        .room(0.5)
+    )
+  ),
+
+  // --- emotional glitch textures (soft & random) ---
+  sometimesBy(0.2,
+    fast(12,
+      s("hh")
+        .gain(0.05)
+        .shape(0.9)
+    )
+  ),
+
+  // --- ghostly reverb swells ---
+  slow(4,
+    s("sd")
+      .gain(0.3)
+      .room(0.9)
+      .shape(0.4)
+  )
+)
