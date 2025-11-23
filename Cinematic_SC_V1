@@ -1,0 +1,29 @@
+(
+{
+    var osc, noise, mod1, mod2, filterMorph, filt, reverb;
+
+    // Slow morphing modulators
+    mod1 = SinOsc.kr(0.08).range(200, 800);        // slow filter movement
+    mod2 = LFNoise1.kr(0.1).range(0.1, 0.5);       // slow amplitude movement
+
+    // Detuned oscillators
+    osc = Mix.fill(4, { |i|
+        SinOsc.ar(55 + LFNoise1.kr(0.2).range(-1, 1) * (i + 1), 0, 0.1)
+    });
+
+    // Dark rumble layer
+    noise = BrownNoise.ar(0.2);
+    noise = LPF.ar(noise, mod1 * 0.5);
+
+    // Morph between oscillator and noise
+    filterMorph = XFade2.ar(osc, noise, SinOsc.kr(0.05));
+
+    // Morphing lowpass filter
+    filt = RLPF.ar(filterMorph, mod1, 0.2);
+
+    // Add big cinematic reverb
+    reverb = FreeVerb.ar(filt, 0.4, 0.9, 0.3);
+
+    (reverb * mod2).tanh;  // final shaping
+}.play;
+)
