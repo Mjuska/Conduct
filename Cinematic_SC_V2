@@ -1,0 +1,39 @@
+(
+{
+    var osc, noise, mod1, mod2, filterMorph, filt, reverb, sub, lowNoise, layers;
+
+    // Slow modulators
+    mod1 = SinOsc.kr(0.08).range(200, 800);       // filter sweep
+    mod2 = LFNoise1.kr(0.1).range(0.1, 0.5);      // slow amplitude
+
+    // Detuned oscillators
+    osc = Array.fill(4, { |i|
+        SinOsc.ar(55 + LFNoise1.kr(0.2).range(-1, 1) * (i + 1), 0, 0.1)
+    });
+
+    // Dark rumble. Lower the LPF cutoff for more weight.
+    lowNoise = BrownNoise.ar(0.25);
+    lowNoise = LPF.ar(lowNoise, mod1 * 0.3);  // lowered cutoff for darker tone
+
+    // Morph oscillator ↔ noise
+    filterMorph = XFade2.ar(osc.sum, lowNoise, SinOsc.kr(0.05));
+
+    // Resonant morphing filter
+    filt = RLPF.ar(filterMorph, mod1, 0.2);
+
+    // Sub-bass layer (simple deep sine)
+    sub = SinOsc.ar(30, 0, 0.3);
+
+    // Combine layers before reverb
+    layers = filt + sub;
+
+    // Stereo width: Splay spreads things around the stereo field.
+    layers = Splay.ar([layers, lowNoise, osc[0], osc[1], osc[2], osc[3]], spread: 0.7);
+
+    // Big cinematic reverb
+    reverb = FreeVerb.ar(layers, mix: 0.4, room: 0.9, damp: 0.3);
+
+    // Final output shaping
+    (reverb * mod2).tanh;
+}.play;
+)
